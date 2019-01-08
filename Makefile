@@ -3,6 +3,8 @@ DISK_IMAGE = ../busybear-linux/busybear.bin
 MOUNT_DIR = ./tmp_busybear
 RUNTIME = eyrie-rt
 
+COPY_DIR = ../work/buildroot_initramfs/target/root
+
 all:
 	make -C lib
 	make -C runtime
@@ -17,11 +19,11 @@ copy-tests:
 	# copy runtime
 	cp runtime/$(RUNTIME) $(BINS_DIR)
 	cp samples/tiny-AES-c/aes.riscv $(BINS_DIR)
-	mkdir -p $(MOUNT_DIR)
-	sudo mount $(DISK_IMAGE) $(MOUNT_DIR)
-	sudo rsync -a $(BINS_DIR)/ $(MOUNT_DIR)/root/
-	sudo umount $(MOUNT_DIR)
-	rmdir $(MOUNT_DIR)
+#	mkdir -p $(MOUNT_DIR)
+#	sudo mount $(DISK_IMAGE) $(MOUNT_DIR)
+	sudo rsync -a $(BINS_DIR)/ $(COPY_DIR)
+#	sudo umount $(MOUNT_DIR)
+#	rmdir $(MOUNT_DIR)
 
 clean:
 	rm -rf bin
